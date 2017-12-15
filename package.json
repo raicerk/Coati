@@ -20,6 +20,7 @@
   "author": "Juan Mora",
   "license": "MIT",
   "dependencies": {
-    "botgram": "^2.0.1"
+    "botgram": "^2.0.1",
+    "http": "0.0.0"
   }
 }
