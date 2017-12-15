@@ -21,6 +21,6 @@
   "license": "MIT",
   "dependencies": {
     "botgram": "^2.0.1",
-    "http": "0.0.0"
+    "node-fetch": "^1.7.3"
   }
 }
