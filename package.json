@@ -1,0 +1,22 @@
+{
+  "name": "avisachauchabot",
+  "version": "1.0.0",
+  "description": "Bot que avisa cuando la chaucha llega a cierto valor monetario",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/raicerk/avisachauchabot"
+  },
+  "keywords": [
+    "telegram",
+    "nodejs",
+    "chaucha",
+    "criptomoneda",
+    "litecoin"
+  ],
+  "author": "Juan Mora",
+  "license": "MIT"
+}
