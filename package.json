@@ -18,5 +18,8 @@
     "litecoin"
   ],
   "author": "Juan Mora",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "botgram": "^2.0.1"
+  }
 }
