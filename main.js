@@ -1,5 +1,5 @@
 const botgram = require("botgram")
-const bot = botgram("373431078:AAHxomGOXe6dLJW5WcFtQD-SrEQFwhB67zI")
+const bot = botgram("APIKEY")
 const fetch = require("node-fetch");
 
 bot.command("Start", (msg, reply) => {
@@ -12,6 +12,7 @@ bot.command("AvisaChaucha", (msg, reply) => {
 
     var Estado = datos[0];
     var Valor = parseInt(datos[1]);
+    var TiempoSegundos = parseInt(datos[2]);
     var ValorCriptoMoneda;
 
     console.log(`El valor ingresado es: ${Valor}`);
@@ -47,11 +48,8 @@ bot.command("AvisaChaucha", (msg, reply) => {
         .catch(error => {
             console.log(error);
         });
-
     
-
-    
-    }, 2000);
+    }, (TiempoSegundos * 1000));
 
 })
 
