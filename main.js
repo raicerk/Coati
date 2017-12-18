@@ -1,15 +1,20 @@
 const botgram = require("botgram")
-const bot = botgram("InserteTokenAca")
+const bot = botgram("InserteTokenTelegramAqui")
 const fetch = require("node-fetch");
+const patron = /^\d*$/;
 var estadoAnalisis = true;
 
 bot.command("Start", (msg, reply) => {
   try {
-    reply.text("Bienvenido a Coati un bot que te avisa cuando el valor de la Chaucha sube o baja de x monto con sistema de revision por segundos por ejemplo: ")
-    reply.text("/Mayor 500 30")
-    reply.text("/Menor 500 40")
-    reply.text("/Avisa 400 500 20")
-    reply.text("Si quieres detener el bot para que no lleguen mas notificaciones solo escribe /Parar ")
+    reply.text(
+      `Bienvenido a Coati un bot que te avisa cuando el valor de la Chaucha sube o baja de x monto con sistema de revision por segundos por ejemplo:
+    
+    /Mayor 500 30
+    /Menor 500 40
+    /Avisa 400 500 20
+
+  Si quieres detener el bot para que no lleguen mas notificaciones solo escribe /Parar `
+    )
   } catch (Exception) {
     console.log(Exception.message);
   }
@@ -27,41 +32,45 @@ bot.command("Avisa", (msg, reply) => {
 
     if (datos.length > 1) {
 
-      var Valor1 = parseInt(datos[0]);
-      var Valor2 = parseInt(datos[1]);
-      var TiempoSegundos = isNaN(parseInt(datos[2])) ? 30 : parseInt(datos[2]);
-      var ValorCriptoMoneda = 0;
+      if (patron.test((datos[0]) && patron.test(datos[1])) && parseInt(datos[0]) < parseInt(datos[1])) {
 
-      console.log(`El valor 1 ingresado es: $${Valor1}`);
-      console.log(`El valor 2 ingresado es: $${Valor2}`);
-      console.log(`El tiempo de actualizacion ingresado es: ${TiempoSegundos} segundos`);
+        var ValorCriptoMoneda = 0;
+        var Valor1 = parseInt(datos[0]);
+        var Valor2 = parseInt(datos[1]);
+        var TiempoSegundos = patron.test(datos[2]) ? isNaN(parseInt(datos[2])) ? 30 : parseInt(datos[2]) : 30;
 
-      setInterval(function() {
+        console.log(`El valor 1 ingresado es: $${Valor1}`);
+        console.log(`El valor 2 ingresado es: $${Valor2}`);
+        console.log(`El tiempo de actualizacion ingresado es: ${TiempoSegundos} segundos`);
 
-        if (estadoAnalisis) {
+        setInterval(function () {
 
-          const url = "https://api.orionx.io/graphql?query={marketOrderBook(marketCode:%22CHACLP%22){mid}}";
+          if (estadoAnalisis) {
 
-          fetch(url)
-            .then(response => {
+            const url = "https://api.orionx.io/graphql?query={marketOrderBook(marketCode:%22CHACLP%22){mid}}";
 
-              response.json().then(json => {
+            fetch(url)
+              .then(response => {
 
-                ValorCriptoMoneda = parseInt(json.data.marketOrderBook.mid);
+                response.json().then(json => {
 
-                if (ValorCriptoMoneda > Valor1 && ValorCriptoMoneda < Valor2) {
-                  reply.text(`La chaucha esta a $${ValorCriptoMoneda}`)
-                }
+                  ValorCriptoMoneda = parseInt(json.data.marketOrderBook.mid);
+
+                  if (ValorCriptoMoneda > Valor1 && ValorCriptoMoneda < Valor2) {
+                    reply.text(`La chaucha esta a $${ValorCriptoMoneda}`)
+                  }
+                });
+              })
+              .catch(error => {
+                console.log(error);
               });
-            })
-            .catch(error => {
-              console.log(error);
-            });
-        }
-      }, (TiempoSegundos * 1000));
+          }
+        }, (TiempoSegundos * 1000));
 
-      reply.text(`Te avisare cuando la chaucha este entre $${Valor1} y $${Valor2}`)
-
+        reply.text(`Te avisare cuando la chaucha este entre $${Valor1} y $${Valor2}, revisare cada ${TiempoSegundos} segundos`)
+      } else {
+        reply.text(`Debes ingresar los parametros correctos, intenta nuevamente por favor`)
+      }
     } else {
       reply.text(`Debes ingresar los parametros al comando /avisa <valor1> <valor2> <segundos>.  Ejemplo: /avisa 400 500 10`)
     }
@@ -82,20 +91,22 @@ bot.command("Mayor", (msg, reply) => {
 
     if (datos != "") {
 
-      var Valor = parseInt(datos[0]);
-      var TiempoSegundos = isNaN(parseInt(datos[1])) ? 30 : parseInt(datos[1]);
-      var ValorCriptoMoneda = 0;
+      if (patron.test(datos[0])) {
 
-      console.log(`El valor ingresado es: $${Valor}`);
-      console.log(`El tiempo de actualizacion ingresado es: ${TiempoSegundos} segundos`);
+        var Valor = parseInt(datos[0]);
+        var TiempoSegundos = patron.test(datos[1]) ? isNaN(parseInt(datos[1])) ? 30 : parseInt(datos[1]) : 30;
+        var ValorCriptoMoneda = 0;
 
-      setInterval(function() {
+        console.log(`El valor ingresado es: $${Valor}`);
+        console.log(`El tiempo de actualizacion ingresado es: ${TiempoSegundos} segundos`);
 
-        if (estadoAnalisis) {
+        setInterval(function () {
 
-          const url = "https://api.orionx.io/graphql?query={marketOrderBook(marketCode:%22CHACLP%22){mid}}";
+          if (estadoAnalisis) {
 
-          fetch(url).then(response => {
+            const url = "https://api.orionx.io/graphql?query={marketOrderBook(marketCode:%22CHACLP%22){mid}}";
+
+            fetch(url).then(response => {
               response.json().then(json => {
                 ValorCriptoMoneda = parseInt(json.data.marketOrderBook.mid);
                 if (ValorCriptoMoneda > Valor) {
@@ -103,12 +114,15 @@ bot.command("Mayor", (msg, reply) => {
                 }
               });
             })
-            .catch(error => {
-              console.log(error);
-            });
-        }
-      }, (TiempoSegundos * 1000));
-      reply.text(`Te avisare cuando el valor de la chaucha sea mayor a $${Valor}`);
+              .catch(error => {
+                console.log(error);
+              });
+          }
+        }, (TiempoSegundos * 1000));
+        reply.text(`Te avisare cuando el valor de la chaucha sea mayor a $${Valor}, revisare cada ${TiempoSegundos} segundos`);
+      } else {
+        reply.text(`Debes ingresar los parametros correctos, intenta nuevamente por favor`)
+      }
     } else {
       reply.text(`Debes ingresar los parametros al comando /mayor <valor> <segundos>.  Ejemplo: /mayor 500 30`)
     }
@@ -129,20 +143,22 @@ bot.command("Menor", (msg, reply) => {
 
     if (datos != "") {
 
-      var Valor = parseInt(datos[0]);
-      var TiempoSegundos = isNaN(parseInt(datos[1])) ? 30 : parseInt(datos[1]);
-      var ValorCriptoMoneda = 0;
+      if (patron.test(datos[0])) {
 
-      console.log(`El valor ingresado es: $${Valor}`);
-      console.log(`El tiempo de actualizacion ingresado es: ${TiempoSegundos} segundos`);
+        var Valor = parseInt(datos[0]);
+        var TiempoSegundos = patron.test(datos[1]) ? isNaN(parseInt(datos[1])) ? 30 : parseInt(datos[1]) : 30;
+        var ValorCriptoMoneda = 0;
 
-      setInterval(function() {
+        console.log(`El valor ingresado es: $${Valor}`);
+        console.log(`El tiempo de actualizacion ingresado es: ${TiempoSegundos} segundos`);
 
-        if (estadoAnalisis) {
+        setInterval(function () {
 
-          const url = "https://api.orionx.io/graphql?query={marketOrderBook(marketCode:%22CHACLP%22){mid}}";
+          if (estadoAnalisis) {
 
-          fetch(url).then(response => {
+            const url = "https://api.orionx.io/graphql?query={marketOrderBook(marketCode:%22CHACLP%22){mid}}";
+
+            fetch(url).then(response => {
               response.json().then(json => {
                 ValorCriptoMoneda = parseInt(json.data.marketOrderBook.mid);
                 if (ValorCriptoMoneda < Valor) {
@@ -150,14 +166,17 @@ bot.command("Menor", (msg, reply) => {
                 }
               });
             })
-            .catch(error => {
-              console.log(error);
-            });
-        }
-      }, (TiempoSegundos * 1000));
-      reply.text(`Te avisare cuando el valor de la chaucha sea menor a $${Valor}`);
+              .catch(error => {
+                console.log(error);
+              });
+          }
+        }, (TiempoSegundos * 1000));
+        reply.text(`Te avisare cuando el valor de la chaucha sea menor a $${Valor}, revisare cada ${TiempoSegundos} segundos`);
+      } else {
+        reply.text(`Debes ingresar los parametros correctos, intenta nuevamente por favor`)
+      }
     } else {
-      reply.text(`Debes ingresar los parametros al comando /menor <valor> <segundos>.  Ejemplo: /menor 500 20`)
+      reply.text(`Debes ingresar los parametros al comando /menor <valor> <segundos>.  Ejemplo: /menor 500 30`)
     }
   } catch (Exception) {
     console.log(Exception.message)
