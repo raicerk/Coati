@@ -1,5 +1,5 @@
 const botgram = require("botgram")
-const bot = botgram("InserteTokenAqui")
+const bot = botgram("492215105:AAFVjsIdVnALMfr3PfmyfXeTKloKeBn4VP4")
 const fetch = require("node-fetch");
 var estadoAnalisis = true;
 
@@ -29,7 +29,7 @@ bot.command("Avisa", (msg, reply) => {
 
       var Valor1 = parseInt(datos[0]);
       var Valor2 = parseInt(datos[1]);
-      var TiempoSegundos = parseInt(datos[2]);
+      var TiempoSegundos = isNaN(parseInt(datos[2])) ? 30 : parseInt(datos[2]);
       var ValorCriptoMoneda = 0;
 
       console.log(`El valor 1 ingresado es: $${Valor1}`);
@@ -83,7 +83,7 @@ bot.command("Mayor", (msg, reply) => {
     if (datos.lenght < 1) {
 
       var Valor = parseInt(datos[0]);
-      var TiempoSegundos = parseInt(datos[1]);
+      var TiempoSegundos = isNaN(parseInt(datos[1])) ? 30 : parseInt(datos[1]);
       var ValorCriptoMoneda = 0;
 
       console.log(`El valor ingresado es: $${Valor}`);
@@ -130,7 +130,7 @@ bot.command("Menor", (msg, reply) => {
     if (datos.lenght < 1) {
 
       var Valor = parseInt(datos[0]);
-      var TiempoSegundos = parseInt(datos[1]);
+      var TiempoSegundos = isNaN(parseInt(datos[1])) ? 30 : parseInt(datos[1]);
       var ValorCriptoMoneda = 0;
 
       console.log(`El valor ingresado es: $${Valor}`);
