@@ -80,7 +80,7 @@ bot.command("Mayor", (msg, reply) => {
 
     var datos = msg.args(1)[0].toString().split(" ");
 
-    if (datos.lenght < 1) {
+    if (datos.lenght <= 0) {
 
       var Valor = parseInt(datos[0]);
       var TiempoSegundos = isNaN(parseInt(datos[1])) ? 30 : parseInt(datos[1]);
@@ -127,7 +127,7 @@ bot.command("Menor", (msg, reply) => {
 
     var datos = msg.args(1)[0].toString().split(" ");
 
-    if (datos.lenght < 1) {
+    if (datos.lenght <= 0) {
 
       var Valor = parseInt(datos[0]);
       var TiempoSegundos = isNaN(parseInt(datos[1])) ? 30 : parseInt(datos[1]);
