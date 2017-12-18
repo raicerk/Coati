@@ -1,5 +1,5 @@
 const botgram = require("botgram")
-const bot = botgram("492215105:AAFVjsIdVnALMfr3PfmyfXeTKloKeBn4VP4")
+const bot = botgram("InserteTokenAqui")
 const fetch = require("node-fetch");
 var estadoAnalisis = true;
 
