@@ -25,54 +25,49 @@ bot.command("Avisa", (msg, reply) => {
 
     var datos = msg.args(1)[0].toString().split(" ");
 
-    var Valor1 = parseInt(datos[0]);
-    var Valor2 = parseInt(datos[1]);
-    var TiempoSegundos = parseInt(datos[2]);
-    var ValorCriptoMoneda = 0;
+    if (datos.lengh < 1) {
 
-    console.log(`El valor 1 ingresado es: $${Valor1}`);
-    console.log(`El valor 2 ingresado es: $${Valor2}`);
-    console.log(`El tiempo de actualizacion ingresado es: ${TiempoSegundos} segundos`);
+      var Valor1 = parseInt(datos[0]);
+      var Valor2 = parseInt(datos[1]);
+      var TiempoSegundos = parseInt(datos[2]);
+      var ValorCriptoMoneda = 0;
 
-    setInterval(function() {
+      console.log(`El valor 1 ingresado es: $${Valor1}`);
+      console.log(`El valor 2 ingresado es: $${Valor2}`);
+      console.log(`El tiempo de actualizacion ingresado es: ${TiempoSegundos} segundos`);
 
-      if (estadoAnalisis) {
+      setInterval(function() {
 
-        const url = "https://api.orionx.io/graphql?query={marketOrderBook(marketCode:%22CHACLP%22){mid}}";
+        if (estadoAnalisis) {
 
-        fetch(url)
-          .then(response => {
+          const url = "https://api.orionx.io/graphql?query={marketOrderBook(marketCode:%22CHACLP%22){mid}}";
 
-            response.json().then(json => {
+          fetch(url)
+            .then(response => {
 
-              ValorCriptoMoneda = parseInt(json.data.marketOrderBook.mid);
+              response.json().then(json => {
 
-              if (ValorCriptoMoneda > Valor1 && ValorCriptoMoneda < Valor2) {
-                reply.text(`La chaucha esta a $${ValorCriptoMoneda}`)
-              }
+                ValorCriptoMoneda = parseInt(json.data.marketOrderBook.mid);
+
+                if (ValorCriptoMoneda > Valor1 && ValorCriptoMoneda < Valor2) {
+                  reply.text(`La chaucha esta a $${ValorCriptoMoneda}`)
+                }
+              });
+            })
+            .catch(error => {
+              console.log(error);
             });
-          })
-          .catch(error => {
-            console.log(error);
-          });
-      }
+        }
+      }, (TiempoSegundos * 1000));
 
-    }, (TiempoSegundos * 1000));
-    reply.text(`Te avisare cuando la chaucha este entre $${Valor1} y $${Valor2}` )
+      reply.text(`Te avisare cuando la chaucha este entre $${Valor1} y $${Valor2}`)
+
+    } else {
+      reply.text(`Debes ingresar los parametros al comando`)
+    }
   } catch (Exception) {
     console.log(Exception.message)
   }
-})
-
-bot.command("Parar", (msg, reply) => {
-
-  try {
-    estadoAnalisis = false;
-    reply.text("Se ha detenido en analisis de las Chauchas")
-  } catch (Exception) {
-    console.log(Exception.message);
-  }
-
 })
 
 bot.command("Mayor", (msg, reply) => {
@@ -85,33 +80,38 @@ bot.command("Mayor", (msg, reply) => {
 
     var datos = msg.args(1)[0].toString().split(" ");
 
-    var Valor = parseInt(datos[0]);
-    var TiempoSegundos = parseInt(datos[1]);
-    var ValorCriptoMoneda = 0;
+    if (datos.lenght < 1) {
 
-    console.log(`El valor ingresado es: $${Valor}`);
-    console.log(`El tiempo de actualizacion ingresado es: ${TiempoSegundos} segundos`);
+      var Valor = parseInt(datos[0]);
+      var TiempoSegundos = parseInt(datos[1]);
+      var ValorCriptoMoneda = 0;
 
-    setInterval(function() {
+      console.log(`El valor ingresado es: $${Valor}`);
+      console.log(`El tiempo de actualizacion ingresado es: ${TiempoSegundos} segundos`);
 
-      if (estadoAnalisis) {
+      setInterval(function() {
 
-        const url = "https://api.orionx.io/graphql?query={marketOrderBook(marketCode:%22CHACLP%22){mid}}";
+        if (estadoAnalisis) {
 
-        fetch(url).then(response => {
-            response.json().then(json => {
-              ValorCriptoMoneda = parseInt(json.data.marketOrderBook.mid);
-              if (ValorCriptoMoneda > Valor) {
-                reply.text(`Vende Chauchas, su valor actual es de $${ValorCriptoMoneda}`)
-              }
+          const url = "https://api.orionx.io/graphql?query={marketOrderBook(marketCode:%22CHACLP%22){mid}}";
+
+          fetch(url).then(response => {
+              response.json().then(json => {
+                ValorCriptoMoneda = parseInt(json.data.marketOrderBook.mid);
+                if (ValorCriptoMoneda > Valor) {
+                  reply.text(`Vende Chauchas, su valor actual es de $${ValorCriptoMoneda}`)
+                }
+              });
+            })
+            .catch(error => {
+              console.log(error);
             });
-          })
-          .catch(error => {
-            console.log(error);
-          });
-      }
-    }, (TiempoSegundos * 1000));
-    reply.text(`Te avisare cuando el valor de la chaucha sea mayor a $${Valor}`);
+        }
+      }, (TiempoSegundos * 1000));
+      reply.text(`Te avisare cuando el valor de la chaucha sea mayor a $${Valor}`);
+    } else {
+      reply.text(`Debes ingresar los parametros al comando`)
+    }
   } catch (Exception) {
     console.log(Exception.message)
   }
@@ -119,13 +119,15 @@ bot.command("Mayor", (msg, reply) => {
 
 bot.command("Menor", (msg, reply) => {
 
-    try {
+  try {
 
-      if (msg) {
-        estadoAnalisis = true;
-      }
+    if (msg) {
+      estadoAnalisis = true;
+    }
 
-      var datos = msg.args(1)[0].toString().split(" ");
+    var datos = msg.args(1)[0].toString().split(" ");
+
+    if (datos.lenght < 1) {
 
       var Valor = parseInt(datos[0]);
       var TiempoSegundos = parseInt(datos[1]);
@@ -154,9 +156,23 @@ bot.command("Menor", (msg, reply) => {
         }
       }, (TiempoSegundos * 1000));
       reply.text(`Te avisare cuando el valor de la chaucha sea menor a $${Valor}`);
-    } catch (Exception) {
-      console.log(Exception.message)
+    } else {
+      reply.text(`Debes ingresar los parametros al comando`)
     }
+  } catch (Exception) {
+    console.log(Exception.message)
+  }
+
+})
+
+bot.command("Parar", (msg, reply) => {
+
+  try {
+    estadoAnalisis = false;
+    reply.text("Se ha detenido en analisis de las Chauchas")
+  } catch (Exception) {
+    console.log(Exception.message);
+  }
 
 })
 
