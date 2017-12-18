@@ -1,5 +1,5 @@
 const botgram = require("botgram")
-const bot = botgram("InserteTokenAqui")
+const bot = botgram("InserteTokenAca")
 const fetch = require("node-fetch");
 var estadoAnalisis = true;
 
@@ -25,7 +25,7 @@ bot.command("Avisa", (msg, reply) => {
 
     var datos = msg.args(1)[0].toString().split(" ");
 
-    if (datos.lengh < 1) {
+    if (datos.length > 1) {
 
       var Valor1 = parseInt(datos[0]);
       var Valor2 = parseInt(datos[1]);
@@ -80,7 +80,7 @@ bot.command("Mayor", (msg, reply) => {
 
     var datos = msg.args(1)[0].toString().split(" ");
 
-    if (datos.lenght <= 0) {
+    if (datos != "") {
 
       var Valor = parseInt(datos[0]);
       var TiempoSegundos = isNaN(parseInt(datos[1])) ? 30 : parseInt(datos[1]);
@@ -127,7 +127,7 @@ bot.command("Menor", (msg, reply) => {
 
     var datos = msg.args(1)[0].toString().split(" ");
 
-    if (datos.lenght <= 0) {
+    if (datos != "") {
 
       var Valor = parseInt(datos[0]);
       var TiempoSegundos = isNaN(parseInt(datos[1])) ? 30 : parseInt(datos[1]);
@@ -177,5 +177,5 @@ bot.command("Parar", (msg, reply) => {
 })
 
 bot.command((msg, reply) => {
-  reply.text("Invalid command.")
+  reply.text("Comando invalido, ingresa solo los que estan en la lista :)")
 })
