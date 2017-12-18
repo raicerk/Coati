@@ -5,17 +5,17 @@ var estadoAnalisis = true;
 
 bot.command("Start", (msg, reply) => {
     try{
-        reply.text("Bienvenido a Avisa Chaucha :) usa el comando /AvisaChaucha (Mayor/Menor) Valor cada X (Segundos) como por ejemplo: ")
-        reply.text("/AvisaChaucha Mayor 500 cada 30 segundos")
-        reply.text("/AvisaChaucha Menor 500 cada 40 segundos")
-        reply.text("Si quieres detener el bot para que no lleguen mas notificaciones solo escribe /stop ")
+        reply.text("Bienvenido a Coati un bot que te avisa cuando el valor de la Chaucha sube o baja :D usa el comando /avisa (Mayor/Menor) Valor cada X (Segundos) como por ejemplo: ")
+        reply.text("/Avisa Mayor 500 cada 30 segundos")
+        reply.text("/Avisa Menor 500 cada 40 segundos")
+        reply.text("Si quieres detener el bot para que no lleguen mas notificaciones solo escribe /Parar ")
     }catch(Exception){
         console.log(Exception.message);
     }
 })
 
-bot.command("AvisaChaucha", (msg, reply) => {
-    
+bot.command("Avisa", (msg, reply) => {
+
     try{
 
         if(msg){
@@ -38,14 +38,14 @@ bot.command("AvisaChaucha", (msg, reply) => {
             if (estadoAnalisis) {
 
                 const url = "https://api.orionx.io/graphql?query={marketOrderBook(marketCode:%22CHACLP%22){mid}}";
-                
+
                 fetch(url)
                     .then(response => {
 
                         response.json().then(json => {
 
                             ValorCriptoMoneda = parseInt(json.data.marketOrderBook.mid);
-                            
+
                             switch (Estado) {
                                 case "Mayor":
                                     if (ValorCriptoMoneda > Valor) {
@@ -76,7 +76,7 @@ bot.command("AvisaChaucha", (msg, reply) => {
     }
 })
 
-bot.command("Stop", (msg, reply) => {
+bot.command("Parar", (msg, reply) => {
 
     try{
         estadoAnalisis = false;
