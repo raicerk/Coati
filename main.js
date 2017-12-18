@@ -1,5 +1,5 @@
 const botgram = require("botgram")
-const bot = botgram("InserteTokenTelegramAqui")
+const bot = botgram("InserteTokenDeTelegramAqui")
 const fetch = require("node-fetch");
 const patron = /^\d*$/;
 var estadoAnalisis = true;
@@ -193,6 +193,61 @@ bot.command("Parar", (msg, reply) => {
     console.log(Exception.message);
   }
 
+})
+
+bot.command("Precio", (msg, reply) => {
+  try {
+
+    if (msg) {
+      estadoAnalisis = true;
+    }
+
+    var datos = msg.args(1)[0].toString();
+
+    var TiempoSegundos = patron.test(datos) ? parseInt(datos): 0 ;
+    var ValorCriptoMoneda = 0;
+
+    console.log(`El tiempo de actualizacion ingresado es: ${TiempoSegundos} segundos`);
+
+    if (TiempoSegundos != 0) {
+      setInterval(function () {
+
+        if (estadoAnalisis) {
+
+          const url = "https://api.orionx.io/graphql?query={marketOrderBook(marketCode:%22CHACLP%22){mid}}";
+
+          fetch(url).then(response => {
+            response.json().then(json => {
+              ValorCriptoMoneda = parseInt(json.data.marketOrderBook.mid);
+              reply.text(`El precio de la chaucha es de $${ValorCriptoMoneda}`)
+            });
+          })
+            .catch(error => {
+              console.log(error);
+            });
+        }
+      }, (TiempoSegundos * 1000));
+    } else {
+
+      if (estadoAnalisis) {
+
+        const url = "https://api.orionx.io/graphql?query={marketOrderBook(marketCode:%22CHACLP%22){mid}}";
+
+        fetch(url).then(response => {
+          response.json().then(json => {
+            ValorCriptoMoneda = parseInt(json.data.marketOrderBook.mid);
+            reply.text(`El precio de la chaucha es de $${ValorCriptoMoneda}`)
+          });
+        })
+          .catch(error => {
+            console.log(error);
+          });
+      }
+    }
+
+  } catch (Exception) {
+    console.log(Exception.message)
+  }
 })
 
 bot.command((msg, reply) => {
