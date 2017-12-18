@@ -7,19 +7,24 @@ Para usar el bot busca en telegram como contacto a @coatibot
 Toca en iniciar y sigue las instrucciones en pantalla para operar con la Criptomoneda Chaucha.
 
 # Opciones
-Te notifica cuando el valor de la chaucha es mayor a 500 pesos Chilenos con actualización del valor de la moneda cada 5 segundos
+Te notifica cuando el valor de la chaucha es mayor esta entre los $400 y $500 pesos Chilenos con actualización del valor de la moneda cada 5 segundos
 ```
-/Avisa Mayor 500 cada 5 segundos
+/Avisa 400 500 5
 ```
 
 Te notifica cuando el valor de la chaucha es menor a 500 pesos Chilenos con actualización del valor de la moneda cada 10 segundos
 ```
-/Avisa Menor 500 cada 10 segundos
+/Mayor 500 10
+```
+
+Te notifica cuando el valor de la chaucha es mayor a 500 pesos Chilenos con actualización del valor de la moneda cada 10 segundos
+```
+/Menor 500 10
 ```
 
 Detiene las notificaciones de chauchas
 ```
-/Stop
+/Parar
 ```
 
 # Compilar
