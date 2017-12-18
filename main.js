@@ -63,7 +63,7 @@ bot.command("Avisa", (msg, reply) => {
       reply.text(`Te avisare cuando la chaucha este entre $${Valor1} y $${Valor2}`)
 
     } else {
-      reply.text(`Debes ingresar los parametros al comando`)
+      reply.text(`Debes ingresar los parametros al comando /avisa <valor1> <valor2> <segundos>.  Ejemplo: /avisa 400 500 10`)
     }
   } catch (Exception) {
     console.log(Exception.message)
@@ -110,7 +110,7 @@ bot.command("Mayor", (msg, reply) => {
       }, (TiempoSegundos * 1000));
       reply.text(`Te avisare cuando el valor de la chaucha sea mayor a $${Valor}`);
     } else {
-      reply.text(`Debes ingresar los parametros al comando`)
+      reply.text(`Debes ingresar los parametros al comando /mayor <valor> <segundos>.  Ejemplo: /mayor 500 30`)
     }
   } catch (Exception) {
     console.log(Exception.message)
@@ -157,7 +157,7 @@ bot.command("Menor", (msg, reply) => {
       }, (TiempoSegundos * 1000));
       reply.text(`Te avisare cuando el valor de la chaucha sea menor a $${Valor}`);
     } else {
-      reply.text(`Debes ingresar los parametros al comando`)
+      reply.text(`Debes ingresar los parametros al comando /menor <valor> <segundos>.  Ejemplo: /menor 500 20`)
     }
   } catch (Exception) {
     console.log(Exception.message)
