@@ -1,5 +1,5 @@
 const botgram = require("botgram")
-const bot = botgram("InserteTokenDeTelegramAqui")
+const bot = botgram("")
 const fetch = require("node-fetch");
 const patron = /^\d*$/;
 var estadoAnalisis = true;
@@ -9,11 +9,22 @@ bot.command("Start", (msg, reply) => {
     reply.text(
       `Bienvenido a Coati un bot que te avisa cuando el valor de la Chaucha sube o baja de x monto con sistema de revision por segundos por ejemplo:
     
+    /Mayor <valor> <segundos> Ejemplo:
     /Mayor 500 30
+
+    /Menor <valor> <segundos> Ejemplo:
     /Menor 500 40
+
+    /Avisa <valor1> <valor2> <segundos> Ejemplo:
     /Avisa 400 500 20
 
-  Si quieres detener el bot para que no lleguen mas notificaciones solo escribe /Parar `
+    /Precio <segundos>
+    /Precio 60
+
+  Para todas las opciones si no colocas los segundos se asumira 30 segundos por defecto
+
+  Si quieres detener el bot para que no lleguen mas notificaciones solo escribe 
+    /Parar `
     )
   } catch (Exception) {
     console.log(Exception.message);
