@@ -53,7 +53,7 @@ node main.js
 
 # Aportes
 
-Si deseas donar chauchas por este desarrollo envialas a esta dirección: ```cp35tBtDSL536FxxZbyBWgzAQpMrAFrp7m```
+Si deseas donar chauchas por este desarrollo envialas a esta dirección: ```ca9K2jHzatKisNegSv4yCuWCNqZM6xhTL3```
 
 
 Este proyecto tiene licencia MIT por lo que todos los aportes son bienvenidos, si deseas aportar, forkea y realiza pull request, todo aporte ayuda a que la Chaucha siga creciendo cada día mas.
